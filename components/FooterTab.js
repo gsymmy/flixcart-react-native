@@ -1,16 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import PropTypes from 'prop-types';
 
-export default class FooterTab extends React.Component {
-    render() {
-        return (
+const FooterTab = ({title, count}) => (
         <View style={styles.footerTabs}>
-            <Text style={styles.tabText}>{this.props.title}</Text>
-            <Text style={styles.tabText}>{this.props.count}</Text>
+            <Text style={styles.tabText}>{title}</Text>
+            <Text style={styles.tabText}>{count}</Text>
         </View>
         );
-    }
-}
 
 const styles = StyleSheet.create({
     footerTabs: {
@@ -20,10 +17,18 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontSize: 20,
-        color: '#ECE948',
+        color: '#ffe066',
         fontFamily: 'Avenir-Black'
     }
-
-
-
 });
+
+FooterTab.PropTypes = {
+    title: PropTypes.string.isRequired,
+    count: PropTypes.number
+}
+
+FooterTab.defaultProps = {
+    title: 'Default'
+}
+
+export default FooterTab;
