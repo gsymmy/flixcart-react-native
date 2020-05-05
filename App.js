@@ -1,16 +1,45 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  SafeAreaView, 
+  TouchableOpacity, 
+  TextInput } from 'react-native';
+
+import {Ionicons} from '@expo/vector-icons';
+
 import FooterTab from './components/FooterTab'
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      totalCount: 1,
-      watchingCount: 4,
-      watchedCount: 3,
+      totalCount: 0,
+      watchingCount: 0,
+      watchedCount: 0,
+      isNewShowAdderVisible: false,
+      newShowText: "",
+      shows:[]
     };
   }
+
+  openShowAdder = () => {
+    this.setState({isNewShowAdderVisible:true});
+  };
+
+  closeShowAdder = () => {
+    this.setState({isNewShowAdderVisible:false});
+  };
+
+  addShow = show => {
+    this.setState((state, props) => ({
+      shows: [...state.shows, show]
+    }), ()=> {
+      console.log(this.state.shows);
+    });
+  };
+
   render() {
   return (
     <View style={styles.appBody}>
@@ -19,7 +48,24 @@ export default class App extends React.Component {
         <Text style={styles.headerText}>FlixCart</Text>
       </View>
       <View style={styles.mainBody}>
-      <TouchableOpacity style={{position: 'absolute', right: 20, bottom: 20}}>
+      <View style={{flex:1}}>
+      {this.state.isNewShowAdderVisible && (
+        <View style={{height:50, flexDirection: 'row'}}>
+          <TextInput onChangeText={(text)=>this.setState({newShowText: text})} style={{flex:1, backgroundColor: '#FFFFFF', paddingLeft: 5}} placeholder="Enter a TV Show/Movie that you wish to watch" placeholderTextColor='grey' />
+          <TouchableOpacity onPress={()=> this.addShow(this.newShowText)}>
+            <View style={{width: 50, height:50, backgroundColor:'#a5deba', alignItems: 'center', justifyContent: 'center'}}>
+              <Ionicons name='ios-checkmark' style={{fontSize: 40, color: 'white'}} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.closeShowAdder}>
+            <View style={{width: 50, height:50, backgroundColor:'#deada5', alignItems: 'center', justifyContent: 'center'}}>
+              <Ionicons name='ios-close' style={{fontSize: 40, color: 'white'}} />
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+      </View>
+      <TouchableOpacity onPress={this.openShowAdder} style={{position: 'absolute', right: 20, bottom: 20}}>
         <View style={styles.roundButton}>
           <Text style={{color:'white', fontSize: 30}}>+</Text>
         </View>
