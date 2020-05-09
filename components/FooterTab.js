@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     }
 });
 
-FooterTab.PropTypes = {
+FooterTab.propTypes = {
     title: PropTypes.string.isRequired,
     count: PropTypes.number
 }
